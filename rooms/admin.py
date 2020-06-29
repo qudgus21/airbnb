@@ -13,7 +13,68 @@ class ItemAdmin(admin.ModelAdmin):
 class RoomAdmin(admin.ModelAdmin):
     """Room Admin Definition"""
 
-    pass
+    fieldsets = (
+        (
+            "Basic Info",
+            {"fields": ("name", "description", "country", "address", "price")},
+        ),
+        ("Times", {"fields": ("check_in", "check_out", "instant_book")},),
+        ("Spaces", {"fields": ("amenities", "facilities", "house_rules")},),
+        (
+            "More About the Space",
+            {
+                "classes": ("collapse",),
+                "fields": ("guests", "beds", "bedrooms", "baths",),
+            },
+        ),
+        ("Last Details", {"fields": ("host",)},),
+    )
+
+    list_display = (
+        "name",
+        "country",
+        "city",
+        "price",
+        "guests",
+        "beds",
+        "bedrooms",
+        "baths",
+        "check_in",
+        "check_out",
+        "instant_book",
+        "count_amenities",
+    )
+
+    # ordering = (
+    #     "name",
+    #     "price",
+    #     "bedrooms",
+    # )
+
+    list_filter = (
+        "instant_book",
+        "host__superhost",
+        "room_type",
+        "amenities",
+        "facilities",
+        "house_rules",
+        "city",
+        "country",
+    )
+
+    search_fields = ("=city", "^host__username")
+    # =정확히 같다 , ^이것으로 시작
+    filter_horizontal = (
+        "amenities",
+        "facilities",
+        "house_rules",
+    )
+
+    def count_amenities(self, obj):  # 자동이다. self는 class, obj는 내가 설정해놓은 admin의 row
+        return "Potato"
+
+    count_amenities.short_description = "hello"
+    # list_display의 count_amentities와 같은 이름의 함수
 
 
 @admin.register(models.Photo)
