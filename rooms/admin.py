@@ -6,7 +6,13 @@ from . import models
 class ItemAdmin(admin.ModelAdmin):
     """Item Admin Definition"""
 
-    pass
+    list_display = (
+        "name",
+        "used_by",
+    )
+
+    def used_by(self, obj):
+        return obj.rooms.count()
 
 
 @admin.register(models.Room)
@@ -43,6 +49,7 @@ class RoomAdmin(admin.ModelAdmin):
         "check_out",
         "instant_book",
         "count_amenities",
+        "count_photos",
     )
 
     # ordering = (
@@ -71,10 +78,14 @@ class RoomAdmin(admin.ModelAdmin):
     )
 
     def count_amenities(self, obj):  # 자동이다. self는 class, obj는 내가 설정해놓은 admin의 row
-        return "Potato"
+        return obj.amenities.count()
 
-    count_amenities.short_description = "hello"
+    # count_amenities.short_description = "hello"
     # list_display의 count_amentities와 같은 이름의 함수
+
+    def count_photos(self, obj):
+        return obj.photos.count()
+        # realated로 photos라고 설정했기 떄문에 photos란 이름으로 사용 가능
 
 
 @admin.register(models.Photo)
