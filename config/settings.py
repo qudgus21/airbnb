@@ -15,6 +15,8 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# print(os.path.join(BASE_DIR, "uploads"))
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -23,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = "zp@i4+lu#i(b510c11oyy#wnv+#ab=(&y4lj#lf#%b^5s5fdcu"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True  # 개발모드인지 아닌지 -> 어디부분이 오류인지 보여줌 false면 그냥 404
 
 ALLOWED_HOSTS = []
 
@@ -127,3 +129,10 @@ STATIC_URL = "/static/"
 
 AUTH_USER_MODEL = "users.User"
 # 커스텀
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")
+# 이미지 파일이 저장될 경로를 생성
+
+
+MEDIA_URL = "/media/"
+# 저장한 미디어파일에 접근 가능하도록 -> 절대경로 설정: 시작부분에 /

@@ -15,7 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings  # settings.py import
+from django.conf.urls.static import static  # 정적파일 보여주기
 
 urlpatterns = [
     path("admin/", admin.site.urls),
 ]
+
+
+if settings.DEBUG:  # DEBUG가 FALSE이면 AMZON S3에서 가져올 것이기 때문
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

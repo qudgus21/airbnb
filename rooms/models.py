@@ -55,7 +55,9 @@ class Photo(core_models.TimeStampedModel):
     """ Photo Model Definition """
 
     caption = models.CharField(max_length=80)
-    file = models.ImageField()
+    file = models.ImageField(
+        upload_to="room_photos"
+    )  # config setting에 media경로 안에 room_photo 생성
     room = models.ForeignKey("Room", related_name="photos", on_delete=models.CASCADE)
 
     def __str__(self):
@@ -92,6 +94,10 @@ class Room(core_models.TimeStampedModel):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):  ##새로 바뀌어 저장되는 내용이 이쪽으로 옴
+        self.city = str.capitalize(self.city)  # 저장시 value값 설정 #capital: 첫문자 대문자로
+        super().save(*args, **kwargs)
 
     def total_rating(self):
         all_reviews = self.reviews.all()
